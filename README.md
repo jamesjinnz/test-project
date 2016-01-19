@@ -11,6 +11,7 @@ Use [test-project](https://github.com/jamesjinnz/test-project.git) to get starte
 
 * Git
 * PHP >= 5.5.9 (for Composer)
+* You need the mbstring extension to use Csv (league/csv) package
 
 ## Installation/Usage
 
