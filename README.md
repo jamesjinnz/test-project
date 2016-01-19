@@ -48,3 +48,20 @@ See [Documentation](#documentation) for more details on the steps below.
 ```
 ### Composer
 [Composer](http://getcomposer.org) is used to manage dependencies.
+
+
+### Command Cli
+
+```
+[Flags]
+    *  --help          Show this help screen
+    *  --create_table  this will cause the MySQL users table to be built (and no further action will be taken)
+    *  --dry_run       this will be used with the --file directive in the instance that we want to run the script but not insert into the DB. All other functions will be executed, but the database won't be altered.
+
+[Options]
+    *   --file  [csv file name] – this is the name of the CSV to be parsed 
+    *  --u     MySQL username 
+    *  --p     MySQL password
+    *  --h     MySQL host
+    *  --d     MySQL database
+```    
