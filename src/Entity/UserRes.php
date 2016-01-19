@@ -5,6 +5,11 @@ class UserRes extends resCommon
 {
     public function insert($data)
     {
+        if (!$this->checkTable()){
+            echo \cli\line('Error: Please create table '.$this->table. ' before insert the data');
+            die;
+        }
+
         $this->sqlBuilder
             ->setTableName($this->table)
             ->setData($data);
