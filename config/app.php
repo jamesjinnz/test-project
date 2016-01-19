@@ -1,4 +1,5 @@
 <?php
+use Catalyst\Library\Console;
 use Simplon\Mysql\Mysql;
 
 //Initial bootstrapper for app
@@ -8,22 +9,25 @@ class App {
 
     public $sqlManager;
     public $dbConn;
+    public $console;
 
     /**
      * Loading Init function
      */
     public function load(){
-        $this->dbConn = $this->dbInit();
+        $setting = new Setting();
+        if ($setting->loadingDbByEnv(dirname(__DIR__))){
+            $this->dbConn = $this->dbInit($setting->config());
+        }
+        $this->console = new Console($this);
     }
 
     /**
-     * Database connection
-     * @return \Simplon\Mysql\Mysql
+     * @param $dbConfig
+     * @return Mysql
      */
-    private function dbInit()
+    public function dbInit($dbConfig)
     {
-        $db = new Setting();
-        $dbConfig = $db->config();
         // database standard setup
         $dbConn = new Mysql(
             $dbConfig['host'],

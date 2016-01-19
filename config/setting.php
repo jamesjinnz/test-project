@@ -19,12 +19,28 @@ class Setting {
      */
     public function __construct()
     {
-        $this->preLoad(dirname(__DIR__));
-        $this->host = getenv('DB_HOST');
-        $this->user = getenv('DB_USER');
-        $this->password = getenv('DB_PASSWORD');
-        $this->database = getenv('DB_NAME');
-        $this->port = getenv('DB_HOST');
+        $result = $this->loadingDbByEnv(dirname(__DIR__));
+        if ($result){
+            $this->host = getenv('DB_HOST');
+            $this->user = getenv('DB_USER');
+            $this->password = getenv('DB_PASSWORD');
+            $this->database = getenv('DB_NAME');
+            $this->port = getenv('DB_HOST');
+        }
+    }
+
+    public function reloadDbConfig($host,$user,$password,$database,$port = 3389)
+    {
+        $this->host = $host;
+        $this->user = $user;
+        $this->password = $password;
+        $this->database = $database;
+        $this->port = $port;
+        return $this->config();
+    }
+
+    public function getDatabase(){
+        return $this->database;
     }
 
     /**
@@ -49,14 +65,15 @@ class Setting {
     /**
      * Loading DotEnv for reading .env setting
      * @param $path
+     * @return bool
      */
-    private function preLoad($path){
+    public function loadingDbByEnv($path){
         try {
             $dotenv = new Dotenv\Dotenv($path);
             $dotenv->load();
+            return true;
         } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
-            die;
+            return false;
         }
     }
 }
