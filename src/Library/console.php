@@ -56,19 +56,19 @@ class Console
     private function menuProcess(Arguments $arguments)
     {
         $csvHandler = new csvHandler();
+        $user = new User($this->dbConnect);
         if ($arguments['dry_run']) {
             if ($arguments['file']) {
-                $csvHandler->readFile($arguments['file'],true);
+                $csvHandler->readFile($arguments['file'],$user,true);
             }else{
                 echo \cli\line("Error: must used with the --file directive");
             }
         }else{
             if ($arguments['file']) {
-                $csvHandler->readFile($arguments['file'],false);
+                $csvHandler->readFile($arguments['file'],$user,false);
             }
 
             if ($arguments['create_table']) {
-                $user = new User($this->dbConnect);
                 $result = $user->createTable();
                 if ($result){
                     $msg = "User table build now";
