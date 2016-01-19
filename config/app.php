@@ -1,4 +1,5 @@
 <?php
+use Catalyst\Library\Console;
 use Simplon\Mysql\Manager\SqlManager;
 use Simplon\Mysql\Mysql;
 
@@ -14,6 +15,8 @@ class App {
      */
     public function load(){
         $this->sqlManager = new SqlManager($this->dbInit());
+        $console = new Console();
+        $console->load();
     }
 
     /**
