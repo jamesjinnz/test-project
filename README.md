@@ -11,6 +11,7 @@ Use [test-project](https://github.com/jamesjinnz/test-project.git) to get starte
 
 * Git
 * PHP >= 5.5.9 (for Composer)
+* Composer [Composer](http://getcomposer.org) is used to manage dependencies.
 * You need the mbstring extension to use Csv (league/csv) package
 
 ## Installation/Usage
@@ -26,6 +27,9 @@ See [Documentation](#documentation) for more details on the steps below.
     * `DB_HOST` - Database host (defaults to `localhost`)
 
 ## Documentation
+In the [Config/Setting.php], public $debug = false; 
+It mean turn off the error report and disable to show more exporting info.
+When change it to public $debug = true;  system will verbose exporting detail and turn on all the error report.
 
 ### Folder Structure
 
@@ -46,9 +50,6 @@ See [Documentation](#documentation) for more details on the steps below.
 ├── README.md
 └── user_upload.php
 ```
-### Composer
-[Composer](http://getcomposer.org) is used to manage dependencies.
-
 
 ### Command Cli
 
@@ -58,9 +59,9 @@ See [Documentation](#documentation) for more details on the steps below.
     *  --create_table  this will cause the MySQL users table to be built (and no further action will be taken)
     *  --dry_run       this will be used with the --file directive in the instance that we want to run the script but not insert into the DB. All other functions will be executed, but the database won't be altered.
 
-[Options]
-    *   --file  [csv file name] – this is the name of the CSV to be parsed 
-    *  --u     MySQL username 
+[Options] Option argument, after it need put space and input your value
+    *  --file  [csv file name] – this is the name of the CSV to be parsed 
+    *  --u     MySQL username
     *  --p     MySQL password
     *  --h     MySQL host
     *  --d     MySQL database
