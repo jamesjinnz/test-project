@@ -16,14 +16,16 @@ use Simplon\Mysql\Manager\SqlManager;
 class Console
 {
     public $sqlManager;
+    public $dbConnect;
 
     /**
      * Console constructor.
-     * @param SqlManager $sqlManager
+     * @param $dbConn
      */
-    public function __construct(SqlManager $sqlManager)
+    public function __construct($dbConn)
     {
-        $this->sqlManager = $sqlManager;
+        $this->sqlManager = new SqlManager($dbConn);
+        $this->dbConnect = $dbConn;
     }
 
     public function load()
@@ -66,9 +68,14 @@ class Console
             }
 
             if ($arguments['create_table']) {
-                $user = new User($this->sqlManager);
-                $user->createTable();
-                echo \cli\line("User table build now");
+                $user = new User($this->dbConnect);
+                $result = $user->createTable();
+                if ($result){
+                    $msg = "User table build now";
+                }else{
+                    $msg = "User table already existing";
+                }
+                echo \cli\line($msg);
             }
 
             if ($arguments['help']) {
