@@ -28,11 +28,12 @@ class UserRes extends resCommon
               PRIMARY KEY (`id`)
             ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
 
-        if (!$this->checkTable()){
-            $result = $this->dbConnect->executeSql($query);
-            return ($result) ? true : false;
-        }else{
+        if ($this->checkTable()){
+            $this->dbConnect->executeSql('TRUNCATE '.$this->table);
             return false;
+        }else{
+            $this->dbConnect->executeSql($query);
+            return true;
         }
     }
 
