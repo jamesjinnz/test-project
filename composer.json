@@ -1,0 +1,23 @@
+{
+    "name": "jamesjinnz/test-project",
+    "type": "project",
+    "license": "MIT",
+    "description": "Catalyst Test Project",
+    "authors": [
+      {
+        "name": "James Jin",
+        "email": "james@raya.co.nz"
+      }
+    ],
+    "autoload": {
+      "psr-4": {
+        "Catalyst\\": "src/"
+      }
+    },
+    "require": {
+        "php": ">=5.5.9",
+        "league/csv": "^8.0",
+        "vlucas/phpdotenv": "^2.2",
+        "simplon/mysql": "^1.3"
+    }
+}
