@@ -1,0 +1,5 @@
+#Unwant Folder
+/vendor
+
+#Unwant File
+.env
