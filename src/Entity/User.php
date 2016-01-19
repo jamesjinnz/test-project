@@ -12,16 +12,31 @@ class User extends UserRes
     protected $email;
 
 
+    /**
+     * capitalised name
+     * @param $name
+     * @return string
+     */
     public function filterName($name){
         $this->name = ucfirst($name);
         return $this->name;
     }
 
+    /**
+     * capitalised surname
+     * @param $surname
+     * @return string
+     */
     public function filterSurname($surname){
         $this->surname = ucfirst($surname);
         return $this->surname;
     }
 
+    /**
+     * lowercase email
+     * @param $email
+     * @return array|string
+     */
     public function filterEmail($email){
         $emailResult =  $this->validEmail($email);
         if ($emailResult['status']){
@@ -51,5 +66,17 @@ class User extends UserRes
             );
         }
         return $result;
+    }
+
+    public function getName(){
+        return $this->name;
+    }
+
+    public function getSurname(){
+        return $this->surname;
+    }
+
+    public function getEmail(){
+        return $this->email;
     }
 }
