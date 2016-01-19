@@ -15,7 +15,7 @@ class App {
      */
     public function load(){
         $this->sqlManager = new SqlManager($this->dbInit());
-        $console = new Console();
+        $console = new Console($this->sqlManager);
         $console->load();
     }
 

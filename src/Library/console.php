@@ -9,14 +9,23 @@
 namespace Catalyst\Library;
 
 
+use Catalyst\Entity\User;
 use cli\Arguments;
+use Simplon\Mysql\Manager\SqlManager;
 
 class Console
 {
+    public $sqlManager;
 
     /**
      * Console constructor.
+     * @param SqlManager $sqlManager
      */
+    public function __construct(SqlManager $sqlManager)
+    {
+        $this->sqlManager = $sqlManager;
+    }
+
     public function load()
     {
         $this->menu();
@@ -27,12 +36,10 @@ class Console
         $arguments = new Arguments(compact('strict'));
 
         $arguments->addFlag(array('help', 'h'), 'Show this help screen');
+        $arguments->addFlag(array('create_table'),'this will cause the MySQL users table to be built (and no further action will be taken)');
+        $arguments->addFlag(array('dry_run'),'this will be used with the --file directive in the instance that we want to run the script but not insert into the DB. All other functions will be executed, but the database won\'t be altered.');
         $arguments->addOption(array('file'), array(
             'description' => '[csv file name] – this is the name of the CSV to be parsed '));
-        $arguments->addOption(array('create_table'), array(
-            'description' => 'this will cause the MySQL users table to be built (and no further action will be taken)'));
-        $arguments->addOption(array('dry_run'), array(
-            'description' => 'this will be used with the --file directive in the instance that we want to run the script but not insert into the DB. All other functions will be executed, but the database won\'t be altered.'));
         $arguments->addOption(array('u'), array(
             'description' => 'MySQL username '));
         $arguments->addOption(array('p'), array(
@@ -46,9 +53,30 @@ class Console
 
     private function menuProcess(Arguments $arguments)
     {
-        if ($arguments['help']) {
-            echo $arguments->getHelpScreen();
-            echo "\n\n";
+        $csvHandler = new csvHandler();
+        if ($arguments['dry_run']) {
+            if ($arguments['file']) {
+                $csvHandler->readFile($arguments['file'],false);
+            }else{
+                echo \cli\line("Error: must used with the --file directive");
+            }
+        }else{
+            if ($arguments['file']) {
+                $csvHandler->readFile($arguments['file']);
+            }
+
+            if ($arguments['create_table']) {
+                $user = new User($this->sqlManager);
+                $user->createTable();
+                echo \cli\line("User table build now");
+            }
+
+            if ($arguments['help']) {
+                echo $arguments->getHelpScreen();
+                echo "\n\n";
+            }
         }
+
+
     }
 }
