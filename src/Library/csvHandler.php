@@ -14,6 +14,8 @@ use League\Csv\Reader;
 
 class csvHandler
 {
+    private $debug = false;
+
     public function readFile($fileName, User $user,$dry=false){
         if (!file_exists($fileName)){
             echo \cli\line("Error: File not existing,Please type file absolute path");
@@ -29,30 +31,54 @@ class csvHandler
     }
 
     private function writeDateToUser(Reader $csv, User $user, $dry=false){
-        $csv->setOffset(1); //because we don't want to insert the
-        if (!$dry){
+        $csv->setOffset(1); //because we don't want to insert the header
 
-        }else{
-            $csv->each(function ($row) use ($user) {
-                $msg = $this->infoDisplay($row,$user);
-                echo \cli\line($msg);
-                return true;
-            });
-        }
+        $csv->each(function ($row) use ($user,$dry) {
+            if ($row){
+                $result = $this->infoDisplay($row,$user);
+                if ($result['status']){
+                    if (!$dry){
+                        $data = array(
+                            'name' => $user->getName(),
+                            'surname'  => $user->getSurname(),
+                            'email'  => $user->getEmail(),
+                        );
+                        $user->insert($data);
+                    }
+                }
+                if (!empty($result['msg'])){
+                    echo \cli\line($result['msg']);
+                }
+            }
+            return true;
+        });
     }
 
     private function infoDisplay($row,User $user){
         $emailResult = $user->filterEmail($row[2]);
-        $msg  = '--> ';
         if (!isset($emailResult['status'])){
-            $msg .= ' [Name] '.$user->filterName($row[0]);
-            $msg .= ' [Surname] '.$user->filterSurname($row[1]);
-            $msg .= ' [Email] '.$emailResult;
-            $msg .= ' ...';
+            $name = $user->filterName($row[0]);
+            $surname = $user->filterSurname($row[1]);
+            $msg = '';
+            if ($this->debug){
+                $msg  = '--> ';
+                $msg .= ' [Name] '.$name;
+                $msg .= ' [Surname] '.$surname;
+                $msg .= ' [Email] '.$emailResult;
+                $msg .= ' ...';
+            }
+            $result = array(
+                'status'=>true,
+                'msg'=>$msg,
+            );
         }else{
-            $msg .= ' '.$emailResult['msg'];
+            $msg = 'Error: '.$emailResult['msg'];
+            $result = array(
+                'msg'=>$msg,
+                'status'=>false,
+            );
         }
-        return $msg;
+        return $result;
 
     }
 }
