@@ -5,7 +5,7 @@ use Egulias\EmailValidator\EmailValidator;
 
 class User extends UserRes
 {
-    public $table = 'user';
+    public $table = 'users';
     protected $id;
     protected $name;
     protected $surname;
