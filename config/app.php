@@ -1,6 +1,4 @@
 <?php
-use Catalyst\Library\Console;
-use Simplon\Mysql\Manager\SqlManager;
 use Simplon\Mysql\Mysql;
 
 //Initial bootstrapper for app
@@ -16,8 +14,6 @@ class App {
      */
     public function load(){
         $this->dbConn = $this->dbInit();
-        $console = new Console($this->dbConn);
-        $console->load();
     }
 
     /**
