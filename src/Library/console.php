@@ -90,7 +90,7 @@ class Console
                     if ($result){
                         $msg = "User table build now";
                     }else{
-                        $msg = "User table already existing";
+                        $msg = "User table has been rebuild";
                     }
                     echo \cli\line($msg);
                     die;
