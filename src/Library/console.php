@@ -58,13 +58,13 @@ class Console
         $csvHandler = new csvHandler();
         if ($arguments['dry_run']) {
             if ($arguments['file']) {
-                $csvHandler->readFile($arguments['file'],false);
+                $csvHandler->readFile($arguments['file'],true);
             }else{
                 echo \cli\line("Error: must used with the --file directive");
             }
         }else{
             if ($arguments['file']) {
-                $csvHandler->readFile($arguments['file']);
+                $csvHandler->readFile($arguments['file'],false);
             }
 
             if ($arguments['create_table']) {
@@ -83,7 +83,6 @@ class Console
                 echo "\n\n";
             }
         }
-
 
     }
 }
