@@ -16,6 +16,16 @@ class csvHandler
 {
     private $debug = false;
 
+    /**
+     * csvHandler constructor.
+     * @param bool $debug
+     */
+    public function __construct($debug)
+    {
+        $this->debug = $debug;
+    }
+
+
     public function readFile($fileName, User $user,$dry=false){
         if (!file_exists($fileName)){
             echo \cli\line("Error: File not existing,Please type file absolute path");

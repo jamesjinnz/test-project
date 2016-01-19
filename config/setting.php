@@ -13,6 +13,7 @@ class Setting {
     protected $password;
     protected $database;
     protected $port;
+    public $debug = false;
 
     /**
      * Setting constructor.

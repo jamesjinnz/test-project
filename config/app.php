@@ -16,10 +16,13 @@ class App {
      */
     public function load(){
         $setting = new Setting();
+        if (!$setting->debug){
+            error_reporting(0);
+        }
         if ($setting->loadingDbByEnv(dirname(__DIR__))){
             $this->dbConn = $this->dbInit($setting->config());
         }
-        $this->console = new Console($this);
+        $this->console = new Console($this,$setting->debug);
     }
 
     /**

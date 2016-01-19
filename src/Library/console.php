@@ -18,15 +18,18 @@ class Console
 {
     public $sqlManager;
     public $dbConnect;
+    public $debug;
     public $app;
 
     /**
      * Console constructor.
      * @param App $app
+     * @param bool|false $debug
      */
-    public function __construct(App $app)
+    public function __construct(App $app,$debug = false)
     {
         $this->app = $app;
+        $this->debug = $debug;
         if($app->dbConn){
             $this->dbConnect =$app->dbConn;
         }
@@ -62,7 +65,7 @@ class Console
 
     private function menuProcess(Arguments $arguments)
     {
-        $csvHandler = new csvHandler();
+        $csvHandler = new csvHandler($this->debug);
 
         if ($arguments['help']) {
             echo $arguments->getHelpScreen();
