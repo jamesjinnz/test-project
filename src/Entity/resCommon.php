@@ -9,14 +9,16 @@ class resCommon
 {
     public $sqlBuilder;
     public $sqlManager;
+    public $dbConnect;
 
     /**
      * resCommon constructor.
-     * @param SqlManager $sqlManager
+     * @param $dbConn
      */
-    public function __construct(SqlManager $sqlManager)
+    public function __construct($dbConn)
     {
-        $this->sqlManager = $sqlManager;
+        $this->sqlManager = new SqlManager($dbConn);
+        $this->dbConnect = $dbConn;
         $this->sqlBuilder = new SqlQueryBuilder();
     }
 }

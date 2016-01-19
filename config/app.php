@@ -9,13 +9,14 @@ require_once(dirname(__DIR__) . '/Config/setting.php');
 class App {
 
     public $sqlManager;
+    public $dbConn;
 
     /**
      * Loading Init function
      */
     public function load(){
-        $this->sqlManager = new SqlManager($this->dbInit());
-        $console = new Console($this->sqlManager);
+        $this->dbConn = $this->dbInit();
+        $console = new Console($this->dbConn);
         $console->load();
     }
 
